@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loch Haven Lakes</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f3f0;
+      --surface: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --accent: #4a5568;
+      --accent-light: #e2e6ea;
+      --border: #dddbd7;
+      --nav-height: 64px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-weight: 300;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(244, 243, 240, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 100;
+    }
+
+    .site-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.01em;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      background: var(--text-primary) !important;
+      color: var(--bg) !important;
+      padding: 0.5rem 1.25rem !important;
+      border-radius: 2px;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.8;
+    }
+
+    /* MAP SECTION */
+    #map-section {
+      padding-top: var(--nav-height);
+      height: 100vh;
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: calc(var(--nav-height) + 2.5rem);
+      left: 2.5rem;
+      z-index: 10;
+      animation: fadeSlideIn 0.8s ease forwards;
+      background: rgba(244, 243, 240, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1.25rem 1.75rem 1.4rem;
+      border-radius: 4px;
+      width: fit-content;
+      max-width: calc(100vw - 5rem);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .map-overlay h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      white-space: nowrap;
+    }
+
+    .map-overlay p {
+      font-size: 0.875rem;
+      color: #2a2a2a;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+
+    .lake-tags {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 0.5rem 1.25rem;
+      justify-content: start;
+    }
+
+    .lake-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: #2a2a2a;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      cursor: default;
+    }
+
+    .lake-tag::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #4a5568;
+      border: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+
+    @keyframes markerPing {
+      0%   { box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(56, 189, 248, 0.9); }
+      70%  { box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 0 16px rgba(56, 189, 248, 0); }
+      100% { box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(56, 189, 248, 0); }
+    }
+
+    .marker-bounce {
+      animation: markerPing 0.75s ease forwards;
+    }
+
+    /* MISSION SECTION */
+    #mission {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mission-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .mission-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding-top: 0.35rem;
+    }
+
+    .mission-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.85rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 1.25rem;
+    }
+
+    .mission-text p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .jurisdiction-note {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .jurisdiction-note strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* REPORT SECTION */
+    #report {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding-top: 0.35rem;
+    }
+
+    .section-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.85rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .report-card {
+      background: var(--surface);
+      padding: 2rem 1.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .report-card:hover {
+      background: var(--accent-light);
+    }
+
+    .report-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .report-card h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .report-card p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .coming-soon-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    /* EMAIL SIGNUP */
+    #signup {
+      background: var(--text-primary);
+      color: var(--bg);
+    }
+
+    .signup-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .signup-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.85rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .signup-text p {
+      font-size: 0.9rem;
+      color: #a0a0a0;
+      line-height: 1.7;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .signup-form input {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--bg);
+      padding: 0.85rem 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder {
+      color: #606060;
+    }
+
+    .signup-form input:focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .signup-form button {
+      background: var(--bg);
+      color: var(--text-primary);
+      border: none;
+      padding: 0.85rem 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .signup-form button:hover {
+      opacity: 0.85;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .mission-inner,
+      .section-header,
+      .signup-inner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .report-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-overlay {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+        padding: 1.25rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="site-name">Loch Haven Lakes</span>
+    <div class="nav-links">
+      <a href="#mission">About</a>
+      <a href="#report">Report</a>
+      <a href="#signup" class="nav-cta">Stay Updated</a>
+    </div>
+  </nav>
+
+  <!-- MAP -->
+  <section id="map-section">
+    <div id="map"></div>
+    <div class="map-overlay">
+      <h1>The Loch Haven Chain of Lakes</h1>
+      <p>Monitoring water quality, wildlife, and environmental health across Orlando's urban lakes.</p>
+      <div class="lake-tags">
+        <span class="lake-tag" data-lake="Lake Formosa">Lake Formosa</span>
+        <span class="lake-tag" data-lake="Lake Rowena">Lake Rowena</span>
+        <span class="lake-tag" data-lake="Lake Estelle">Lake Estelle</span>
+        <span class="lake-tag" data-lake="Lake Sue">Lake Sue</span>
+        <span class="lake-tag" data-lake="Lake Winyah">Lake Winyah</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section id="mission">
+    <div class="mission-inner fade-in">
+      <span class="mission-label">Our Mission</span>
+      <div class="mission-text">
+        <h2>Bridging the gap between community observation and civic action</h2>
+        <p>The Loch Haven lake chain runs through the heart of Orlando, yet responsibility for its health is divided across multiple agencies. Fishing litter, water quality issues, and wildlife distress often go unreported — not because people don't care, but because they don't know who to call.</p>
+        <p>This platform exists to change that. Submit a report, track lake health over time, and connect with the right agency the first time.</p>
+        <div class="jurisdiction-note">
+          <strong>Who manages what?</strong> The parks department oversees the shoreline, stormwater manages the first few feet of water, and Florida Fish & Wildlife covers the rest. A full jurisdiction guide is coming soon.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section>
+    <div id="report">
+      <div class="section-header fade-in">
+        <span class="section-label">Take Action</span>
+        <div>
+          <h2>See something.<br>Report it.</h2>
+          <p>Every report builds a clearer picture of lake health over time and routes directly to the right agency.</p>
+        </div>
+      </div>
+      <div class="report-grid fade-in">
+        <a href="#" class="report-card">
+          <div class="report-icon">🪱</div>
+          <h3>Fishing Litter</h3>
+          <p>Monofilament line, hooks, bait containers, and tackle left at the water's edge.</p>
+          <span class="coming-soon-badge">Coming Soon</span>
+        </a>
+        <a href="#" class="report-card">
+          <div class="report-icon">🦅</div>
+          <h3>Wildlife Distress</h3>
+          <p>Injured birds, entangled animals, or unusual wildlife behavior near the lakes.</p>
+          <span class="coming-soon-badge">Coming Soon</span>
+        </a>
+        <a href="#" class="report-card">
+          <div class="report-icon">💧</div>
+          <h3>Water Quality</h3>
+          <p>Algae blooms, discoloration, unusual odor, or visible pollution in the water.</p>
+          <span class="coming-soon-badge">Coming Soon</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNUP -->
+  <section id="signup">
+    <div class="signup-inner">
+      <div class="signup-text fade-in">
+        <h2>Stay in the loop</h2>
+        <p>Get notified when the reporting platform launches and when lake health updates are published for your area.</p>
+      </div>
+      <form class="signup-form fade-in" onsubmit="handleSignup(event)">
+        <input type="text" placeholder="Your name" id="signup-name">
+        <input type="email" placeholder="Email address" id="signup-email" required>
+        <button type="submit">Notify Me When We Launch →</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Loch Haven Lakes</span>
+    <span>Orlando, Florida</span>
+  </footer>
+
+  <script>
+    // Mapbox
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN_HERE';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/chrisduffy90/cmmgqwd3h003101qn19rk2mdw',
+      center: [-81.3640, 28.5740],
+      zoom: 14.8,
+      pitch: 30,
+      scrollZoom: false,
+    });
+
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+    // Lake markers
+    const lakes = [
+      { name: 'Lake Formosa', coords: [-81.36973539513252, 28.568350215338864] },
+      { name: 'Lake Rowena', coords: [-81.3600932586758, 28.570678173361642] },
+      { name: 'Lake Estelle', coords: [-81.36579300695567, 28.574994295707267] },
+      { name: 'Lake Sue', coords: [-81.35439992564169, 28.577123080993033] },
+      { name: 'Lake Winyah', coords: [-81.36850798530743, 28.578398939361946] },
+    ];
+
+    const markerEls = {};
+
+    lakes.forEach(lake => {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        width: 10px;
+        height: 10px;
+        background: #4a5568;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        cursor: pointer;
+      `;
+      markerEls[lake.name] = el;
+      el.addEventListener('animationend', () => el.classList.remove('marker-bounce'));
+
+      new mapboxgl.Marker(el)
+        .setLngLat(lake.coords)
+        .setPopup(new mapboxgl.Popup({ offset: 15 }).setHTML(`<strong>${lake.name}</strong>`))
+        .addTo(map);
+    });
+
+    document.querySelectorAll('.lake-tag[data-lake]').forEach(tag => {
+      tag.addEventListener('mouseenter', () => {
+        const el = markerEls[tag.dataset.lake];
+        if (!el) return;
+        el.classList.remove('marker-bounce');
+        void el.offsetWidth; // reflow to restart animation
+        el.classList.add('marker-bounce');
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Email signup placeholder
+    function handleSignup(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'You\'re on the list ✓';
+      btn.style.opacity = '0.6';
+      btn.disabled = true;
+    }
+  </script>
+
+</body>
+</html>
