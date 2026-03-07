@@ -108,35 +108,23 @@
 
     .map-overlay {
       position: absolute;
-      top: calc(var(--nav-height) + 2.5rem);
-      left: 2.5rem;
+      top: calc(var(--nav-height) + 2rem);
+      left: 2rem;
       z-index: 10;
       animation: fadeSlideIn 0.8s ease forwards;
-      background: rgba(244, 243, 240, 0.82);
+      background: rgba(244, 243, 240, 0.88);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding: 1.25rem 1.75rem 1.4rem;
-      border-radius: 4px;
-      width: fit-content;
-      max-width: calc(100vw - 5rem);
+      padding: 1.1rem 1.4rem;
+      max-width: 340px;
       border: 1px solid rgba(255,255,255,0.5);
     }
 
-    .map-overlay h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.6rem;
-      line-height: 1.15;
-      margin-bottom: 0.5rem;
-      font-weight: 400;
-      color: #1a1a1a;
-      white-space: nowrap;
-    }
-
     .map-overlay p {
-      font-size: 0.875rem;
+      font-size: 0.82rem;
       color: #2a2a2a;
       line-height: 1.55;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
 
     .lake-tags {
@@ -445,7 +433,7 @@
         left: 1rem;
         right: 1rem;
         max-width: none;
-        padding: 1.25rem 1.25rem;
+        padding: 1.1rem 1.25rem;
       }
     }
   </style>
@@ -465,7 +453,6 @@
   <section id="map-section">
     <div id="map"></div>
     <div class="map-overlay">
-      <h1>The Loch Haven Chain of Lakes</h1>
       <p>Monitoring water quality, wildlife, and environmental health across Orlando's urban lakes.</p>
       <div class="lake-tags">
         <span class="lake-tag" data-lake="Lake Formosa">Lake Formosa</span>
@@ -546,7 +533,6 @@
   </footer>
 
   <script>
-    // Mapbox
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXNkdWZmeTkwIiwiYSI6ImNtbWd0cjJyMzBuN2wycW9leWV3YzcxeG0ifQ.eSZH8l0XSajZObfHthFLuA';
 
     const map = new mapboxgl.Map({
@@ -560,7 +546,6 @@
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    // Lake markers
     const lakes = [
       { name: 'Lake Formosa', coords: [-81.36973539513252, 28.568350215338864] },
       { name: 'Lake Rowena', coords: [-81.3600932586758, 28.570678173361642] },
@@ -596,12 +581,11 @@
         const el = markerEls[tag.dataset.lake];
         if (!el) return;
         el.classList.remove('marker-bounce');
-        void el.offsetWidth; // reflow to restart animation
+        void el.offsetWidth;
         el.classList.add('marker-bounce');
       });
     });
 
-    // Scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -612,7 +596,6 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Email signup placeholder
     function handleSignup(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button');
