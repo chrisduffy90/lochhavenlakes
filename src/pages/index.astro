@@ -18,15 +18,27 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
   <nav>
     <span class="site-name">Loch Haven Lakes</span>
     <div class="nav-links">
-      <a href="#mission">About</a>
-      <a href="#report">Report</a>
+      <a href="#mission" class="nav-text-link">About</a>
+      <a href="#report" class="nav-text-link">Report</a>
       <a href="#signup" class="nav-cta">Stay Updated</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="#mission">About</a>
+    <a href="#report">Report</a>
+  </div>
 
   <!-- MAP -->
   <section id="map-section">
     <div id="map"></div>
+
+    <!-- Desktop overlay -->
     <div class="map-overlay">
       <p>Monitoring water quality, wildlife, and environmental health across Orlando's urban lakes.</p>
       <div class="lake-tags">
@@ -36,6 +48,24 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         <span class="lake-tag" data-lake="Lake Sue">Lake Sue</span>
         <span class="lake-tag" data-lake="Lake Winyah">Lake Winyah</span>
       </div>
+      <a href="/lakes" class="lakes-link">Learn more about the lakes →</a>
+    </div>
+
+    <!-- Mobile: tap to interact prompt -->
+    <div class="map-touch-prompt" id="map-touch-prompt">Tap to explore map</div>
+
+    <!-- Mobile bottom sheet -->
+    <div class="map-bottom-sheet">
+      <div class="drag-handle"></div>
+      <p>Monitoring water quality, wildlife, and environmental health across Orlando's urban lakes.</p>
+      <div class="lake-tags-scroll">
+        <span class="lake-tag" data-lake="Lake Formosa">Lake Formosa</span>
+        <span class="lake-tag" data-lake="Lake Rowena">Lake Rowena</span>
+        <span class="lake-tag" data-lake="Lake Estelle">Lake Estelle</span>
+        <span class="lake-tag" data-lake="Lake Sue">Lake Sue</span>
+        <span class="lake-tag" data-lake="Lake Winyah">Lake Winyah</span>
+      </div>
+      <a href="/lakes" class="lakes-link">Learn more about the lakes →</a>
     </div>
   </section>
 
@@ -198,6 +228,54 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         btn.disabled = false;
       }
     });
+
+    // --- Hamburger menu ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    // --- Mobile map touch fix ---
+    const touchPrompt = document.getElementById('map-touch-prompt');
+
+    if (window.innerWidth <= 768) {
+      map.dragPan.disable();
+      map.touchZoomRotate.disable();
+
+      if (touchPrompt) {
+        touchPrompt.addEventListener('click', () => {
+          map.dragPan.enable();
+          map.touchZoomRotate.enable();
+          touchPrompt.style.display = 'none';
+        });
+      }
+    }
   </script>
 
 </body>

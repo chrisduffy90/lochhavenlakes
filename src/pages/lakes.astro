@@ -1,0 +1,182 @@
+---
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lakes — Loch Haven Lakes</title>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="site-name">Loch Haven Lakes</a>
+    <div class="nav-links">
+      <a href="/#mission" class="nav-text-link">About</a>
+      <a href="/#report" class="nav-text-link">Report</a>
+      <a href="/#signup" class="nav-cta">Stay Updated</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="/#mission">About</a>
+    <a href="/#report">Report</a>
+  </div>
+
+  <main class="lakes-page">
+
+    <div class="lakes-hero fade-in">
+      <h1>The Loch Haven Lake Chain</h1>
+      <p>Five interconnected urban lakes winding through the heart of Orlando — home to herons, osprey, alligators, and a community that cares about their future.</p>
+    </div>
+
+    <div class="lakes-list">
+
+      <article class="lake-entry fade-in">
+        <h2>Lake Formosa</h2>
+        <p>The southernmost lake in the chain, Lake Formosa sits adjacent to Mills Avenue and the YMCA Aquatic Center. Its shores attract great blue herons, anhingas, and seasonal migratory waterfowl, while largemouth bass and catfish populate the deeper water. Fishing pressure and proximity to roadways make it one of the more actively monitored lakes in the chain.</p>
+        <div class="lake-stats">
+          <div class="lake-stat">
+            <span>Surface Area</span>
+            <strong>~54 acres</strong>
+          </div>
+          <div class="lake-stat">
+            <span>Max Depth</span>
+            <strong>~10 ft</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="lake-entry fade-in">
+        <h2>Lake Rowena</h2>
+        <p>Lake Rowena anchors the cultural core of the chain, bordered by the Orlando Museum of Art, Mennello Museum, and the green expanse of Loch Haven Park. Osprey nest in the tall pines along its eastern bank, and American alligators are a common year-round sight. Its visibility from cultural venues makes it a focal point for public environmental awareness.</p>
+        <div class="lake-stats">
+          <div class="lake-stat">
+            <span>Surface Area</span>
+            <strong>~56 acres</strong>
+          </div>
+          <div class="lake-stat">
+            <span>Max Depth</span>
+            <strong>~12 ft</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="lake-entry fade-in">
+        <h2>Lake Estelle</h2>
+        <p>Smaller and quieter than its neighbors, Lake Estelle provides a calmer ecosystem within the chain. Turtles bask along its banks throughout the day, and the lake supports a healthy population of wading birds including little blue herons and tricolored herons. Its sheltered character makes it an important refuge for nesting wildlife.</p>
+        <div class="lake-stats">
+          <div class="lake-stat">
+            <span>Surface Area</span>
+            <strong>~30 acres</strong>
+          </div>
+          <div class="lake-stat">
+            <span>Max Depth</span>
+            <strong>~8 ft</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="lake-entry fade-in">
+        <h2>Lake Sue</h2>
+        <p>Straddling the border between Orlando and Winter Park, Lake Sue is a favorite among early-morning kayakers and paddleboarders. Wood storks, limpkins, and nesting osprey are regularly spotted along its vegetated shoreline. Residential development on nearly all sides makes responsible land use a critical factor in maintaining water quality here.</p>
+        <div class="lake-stats">
+          <div class="lake-stat">
+            <span>Surface Area</span>
+            <strong>~45 acres</strong>
+          </div>
+          <div class="lake-stat">
+            <span>Max Depth</span>
+            <strong>~9 ft</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="lake-entry fade-in">
+        <h2>Lake Winyah</h2>
+        <p>The most secluded of the five, Lake Winyah retains a natural vegetative buffer along much of its shoreline. It serves as a critical wildlife corridor connecting the chain to adjacent green spaces and supports nesting wading birds in numbers that have declined elsewhere in the chain. Its relative isolation makes it one of the most ecologically sensitive lakes to monitor.</p>
+        <div class="lake-stats">
+          <div class="lake-stat">
+            <span>Surface Area</span>
+            <strong>~25 acres</strong>
+          </div>
+          <div class="lake-stat">
+            <span>Max Depth</span>
+            <strong>~7 ft</strong>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="friends-section">
+      <div class="friends-inner fade-in">
+        <span class="section-label">Community</span>
+        <div class="friends-text">
+          <h2>Friends of Loch Haven Chain of Lakes</h2>
+          <p>A volunteer-led nonprofit dedicated to the conservation and stewardship of the Loch Haven lake chain. They organize shoreline cleanups, coordinate water quality monitoring, and advocate for responsible land management with the City of Orlando and Orange County.</p>
+          <p>If you want to get involved — whether through volunteering, donating, or simply attending a cleanup event — this organization is the right place to start.</p>
+          <a href="#" class="friends-link">Learn more about the organization →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Loch Haven Lakes</span>
+    <span>Orlando, Florida</span>
+  </footer>
+
+  <script is:inline>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
