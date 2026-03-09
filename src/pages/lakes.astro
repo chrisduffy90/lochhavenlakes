@@ -8,6 +8,108 @@ import '../styles/global.css';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Lakes — Loch Haven Lakes</title>
+  <style>
+    .lakes-page {
+      padding-top: var(--nav-height);
+    }
+
+    /* ── HERO ── */
+    .lakes-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5.5rem 2.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lakes-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.75rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .lakes-hero p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    /* ── LAKE LIST ── */
+    .lakes-list {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2.5rem 7rem;
+    }
+
+    .lake-entry {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lake-entry:last-child {
+      border-bottom: none;
+    }
+
+    .lake-entry-header {
+      margin-bottom: 1.35rem;
+    }
+
+    .lake-entry-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .lake-acreage {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .lake-body {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      max-width: 640px;
+    }
+
+    .lake-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .lakes-hero {
+        padding: 3.5rem 1.25rem 3rem;
+      }
+
+      .lakes-hero h1 {
+        font-size: 1.95rem;
+      }
+
+      .lakes-list {
+        padding: 0 1.25rem 5rem;
+      }
+
+      .lake-entry {
+        padding: 3rem 0;
+      }
+
+      .lake-entry-header h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -16,6 +118,7 @@ import '../styles/global.css';
     <div class="nav-links">
       <a href="/#mission" class="nav-text-link">About</a>
       <a href="/#report" class="nav-text-link">Report</a>
+      <a href="/resources" class="nav-text-link">Resources</a>
       <a href="/#signup" class="nav-cta">Stay Updated</a>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
@@ -28,105 +131,79 @@ import '../styles/global.css';
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <a href="/#mission">About</a>
     <a href="/#report">Report</a>
+    <a href="/resources">Resources</a>
   </div>
 
   <main class="lakes-page">
 
     <div class="lakes-hero fade-in">
       <h1>The Loch Haven Lake Chain</h1>
-      <p>Five interconnected urban lakes winding through the heart of Orlando — home to herons, osprey, alligators, and a community that cares about their future.</p>
+      <p>Five interconnected urban lakes winding through the heart of Orlando: home to herons, osprey, alligators, and a community that cares about their future. All five lakes are part of the Howell Branch Watershed, which eventually flows into the St. Johns River.</p>
     </div>
 
     <div class="lakes-list">
 
       <article class="lake-entry fade-in">
-        <h2>Lake Formosa</h2>
-        <p>The southernmost lake in the chain, Lake Formosa sits adjacent to Mills Avenue and the YMCA Aquatic Center. Its shores attract great blue herons, anhingas, and seasonal migratory waterfowl, while largemouth bass and catfish populate the deeper water. Fishing pressure and proximity to roadways make it one of the more actively monitored lakes in the chain.</p>
-        <div class="lake-stats">
-          <div class="lake-stat">
-            <span>Surface Area</span>
-            <strong>~54 acres</strong>
-          </div>
-          <div class="lake-stat">
-            <span>Max Depth</span>
-            <strong>~10 ft</strong>
-          </div>
+        <div class="lake-entry-header">
+          <h2>Lake Formosa</h2>
+          <span class="lake-acreage">33 acres</span>
+        </div>
+        <p class="lake-body">A spring-fed sinkhole lake, Lake Formosa is the southernmost in the chain. In 1880, Philadelphia attorney James M. Wilcox purchased 40 acres around the lake to build the West End Hotel. The lake was renamed Formosa (Portuguese for "beautiful") in 1887. By mid-century its southern shore hosted the Loch Haven Youth Center, known for boat-accessible dances that drew Orlando youth to its banks. Today its shores attract great blue herons, anhingas, and seasonal migratory waterfowl, while largemouth bass and catfish populate its depths. A man-made canal connects it north to Lake Rowena.</p>
+        <div class="lake-badges">
+          <span class="coming-soon-badge">Water Quality</span>
+          <span class="coming-soon-badge">Incident Reports</span>
         </div>
       </article>
 
       <article class="lake-entry fade-in">
-        <h2>Lake Rowena</h2>
-        <p>Lake Rowena anchors the cultural core of the chain, bordered by the Orlando Museum of Art, Mennello Museum, and the green expanse of Loch Haven Park. Osprey nest in the tall pines along its eastern bank, and American alligators are a common year-round sight. Its visibility from cultural venues makes it a focal point for public environmental awareness.</p>
-        <div class="lake-stats">
-          <div class="lake-stat">
-            <span>Surface Area</span>
-            <strong>~56 acres</strong>
-          </div>
-          <div class="lake-stat">
-            <span>Max Depth</span>
-            <strong>~12 ft</strong>
-          </div>
+        <div class="lake-entry-header">
+          <h2>Lake Rowena</h2>
+          <span class="lake-acreage">58 acres</span>
+        </div>
+        <p class="lake-body">The cultural heart of the chain, Lake Rowena is spring-fed and connected by canals to Lake Formosa to the south, Lake Estelle to the west, and Lake Sue to the northeast. Its northern shore is home to Harry P. Leu Gardens, a 50-acre botanical garden, while Loch Haven Park borders its western edge, placing it within walking distance of the Orlando Museum of Art and Orlando Science Center. Osprey nest in the tall pines along its banks.</p>
+        <div class="lake-badges">
+          <span class="coming-soon-badge">Water Quality</span>
+          <span class="coming-soon-badge">Incident Reports</span>
         </div>
       </article>
 
       <article class="lake-entry fade-in">
-        <h2>Lake Estelle</h2>
-        <p>Smaller and quieter than its neighbors, Lake Estelle provides a calmer ecosystem within the chain. Turtles bask along its banks throughout the day, and the lake supports a healthy population of wading birds including little blue herons and tricolored herons. Its sheltered character makes it an important refuge for nesting wildlife.</p>
-        <div class="lake-stats">
-          <div class="lake-stat">
-            <span>Surface Area</span>
-            <strong>~30 acres</strong>
-          </div>
-          <div class="lake-stat">
-            <span>Max Depth</span>
-            <strong>~8 ft</strong>
-          </div>
+        <div class="lake-entry-header">
+          <h2>Lake Estelle</h2>
+          <span class="lake-acreage">46 acres</span>
+        </div>
+        <p class="lake-body">Lake Estelle carries some of the chain's most layered history. In 1908, a farmhouse on its western shore became a sanitarium for tuberculosis patients; that institution eventually evolved into the modern AdventHealth system, whose campus still borders the lake today. The Andrews Causeway, dedicated in 1949 by President Harry Truman, bisects the lake connecting Mills Avenue to surrounding neighborhoods. Turtles bask along its banks throughout the day, and the lake supports little blue herons and tricolored herons among its wading bird population.</p>
+        <div class="lake-badges">
+          <span class="coming-soon-badge">Water Quality</span>
+          <span class="coming-soon-badge">Incident Reports</span>
         </div>
       </article>
 
       <article class="lake-entry fade-in">
-        <h2>Lake Sue</h2>
-        <p>Straddling the border between Orlando and Winter Park, Lake Sue is a favorite among early-morning kayakers and paddleboarders. Wood storks, limpkins, and nesting osprey are regularly spotted along its vegetated shoreline. Residential development on nearly all sides makes responsible land use a critical factor in maintaining water quality here.</p>
-        <div class="lake-stats">
-          <div class="lake-stat">
-            <span>Surface Area</span>
-            <strong>~45 acres</strong>
-          </div>
-          <div class="lake-stat">
-            <span>Max Depth</span>
-            <strong>~9 ft</strong>
-          </div>
+        <div class="lake-entry-header">
+          <h2>Lake Sue</h2>
+          <span class="lake-acreage">144 acres</span>
+        </div>
+        <p class="lake-body">The largest lake in the chain, Lake Sue straddles the border between Orlando and Winter Park. Its shores are home to the historic 1890 Beeman Victorian home, a remnant of its 19th-century status as a retreat for the elite. It is a key water table lake in the Howell Branch Creek system, bordered by approximately 100 homes with no public access. Wood storks, limpkins, and nesting osprey are regularly spotted along its vegetated shoreline. Residential development on nearly all sides makes responsible land use a critical factor in maintaining water quality.</p>
+        <div class="lake-badges">
+          <span class="coming-soon-badge">Water Quality</span>
+          <span class="coming-soon-badge">Incident Reports</span>
         </div>
       </article>
 
       <article class="lake-entry fade-in">
-        <h2>Lake Winyah</h2>
-        <p>The most secluded of the five, Lake Winyah retains a natural vegetative buffer along much of its shoreline. It serves as a critical wildlife corridor connecting the chain to adjacent green spaces and supports nesting wading birds in numbers that have declined elsewhere in the chain. Its relative isolation makes it one of the most ecologically sensitive lakes to monitor.</p>
-        <div class="lake-stats">
-          <div class="lake-stat">
-            <span>Surface Area</span>
-            <strong>~25 acres</strong>
-          </div>
-          <div class="lake-stat">
-            <span>Max Depth</span>
-            <strong>~7 ft</strong>
-          </div>
+        <div class="lake-entry-header">
+          <h2>Lake Winyah</h2>
+          <span class="lake-acreage">17 acres</span>
+        </div>
+        <p class="lake-body">The most secluded of the five, Lake Winyah sits in the Colonialtown North neighborhood just east of the Loch Haven area. A solution lake formed by the dissolution of underlying limestone, it retains a natural vegetative buffer along much of its shoreline and serves as a critical wildlife corridor connecting the chain to adjacent green spaces. As of late 2025, water clarity measured 5.28 feet Secchi depth, with nitrogen levels well below threshold. It supports nesting wading birds in numbers that have declined elsewhere in the chain.</p>
+        <div class="lake-badges">
+          <span class="coming-soon-badge">Water Quality</span>
+          <span class="coming-soon-badge">Incident Reports</span>
         </div>
       </article>
 
     </div>
-
-    <section class="friends-section">
-      <div class="friends-inner fade-in">
-        <span class="section-label">Community</span>
-        <div class="friends-text">
-          <h2>Friends of Loch Haven Chain of Lakes</h2>
-          <p>A volunteer-led nonprofit dedicated to the conservation and stewardship of the Loch Haven lake chain. They organize shoreline cleanups, coordinate water quality monitoring, and advocate for responsible land management with the City of Orlando and Orange County.</p>
-          <p>If you want to get involved — whether through volunteering, donating, or simply attending a cleanup event — this organization is the right place to start.</p>
-          <a href="#" class="friends-link">Learn more about the organization →</a>
-        </div>
-      </div>
-    </section>
 
   </main>
 
@@ -136,7 +213,6 @@ import '../styles/global.css';
   </footer>
 
   <script is:inline>
-    // Hamburger menu
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -168,12 +244,11 @@ import '../styles/global.css';
       });
     }
 
-    // Scroll fade-in
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>

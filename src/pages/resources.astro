@@ -1,0 +1,270 @@
+---
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — Loch Haven Lakes</title>
+  <style>
+    .resources-page {
+      padding-top: var(--nav-height);
+    }
+
+    /* ── HERO ── */
+    .resources-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5.5rem 2.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resources-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.75rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .resources-hero p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    /* ── RESOURCE SECTIONS ── */
+    .resource-section {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resource-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .resource-content h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.85rem;
+      color: var(--text-primary);
+    }
+
+    .resource-content p {
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── LINKS ── */
+    .resource-link {
+      display: inline-block;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--text-primary);
+      padding-bottom: 0.15rem;
+      transition: opacity 0.2s;
+    }
+
+    .resource-link:hover {
+      opacity: 0.55;
+    }
+
+    /* ── WATER ATLAS LAKE LIST ── */
+    .lake-link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .lake-link-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .lake-link-list a:hover {
+      color: var(--text-primary);
+    }
+
+    .lake-link-list a::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .resources-hero {
+        padding: 3.5rem 1.25rem 3rem;
+      }
+
+      .resources-hero h1 {
+        font-size: 1.95rem;
+      }
+
+      .resource-inner {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 3rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="site-name">Loch Haven Lakes</a>
+    <div class="nav-links">
+      <a href="/#mission" class="nav-text-link">About</a>
+      <a href="/#report" class="nav-text-link">Report</a>
+      <a href="/resources" class="nav-text-link">Resources</a>
+      <a href="/#signup" class="nav-cta">Stay Updated</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="/#mission">About</a>
+    <a href="/#report">Report</a>
+    <a href="/resources">Resources</a>
+  </div>
+
+  <main class="resources-page">
+
+    <div class="resources-hero fade-in">
+      <h1>Resources</h1>
+      <p>Organizations, agencies, and data sources working to protect the Loch Haven lake chain.</p>
+    </div>
+
+    <!-- Section 1: Community -->
+    <section class="resource-section">
+      <div class="resource-inner fade-in">
+        <span class="section-label">Community</span>
+        <div class="resource-content">
+          <h2>Friends of Loch Haven Chain of Lakes</h2>
+          <p>A group of neighbors concerned about the water quality of the Loch Haven Chain of Lakes. To improve the overall health of the lakes, they created a non-profit organization dedicated to hands-on stewardship.</p>
+          <a href="https://www.flhcl.org" class="resource-link" target="_blank" rel="noopener noreferrer">Visit flhcl.org →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Water Quality Data -->
+    <section class="resource-section">
+      <div class="resource-inner fade-in">
+        <span class="section-label">Water Quality Data</span>
+        <div class="resource-content">
+          <h2>Water Atlas — Lake Monitoring Data</h2>
+          <p>Real-time and historical water quality data for each lake in the chain, maintained by the University of South Florida.</p>
+          <div class="lake-link-list">
+            <a href="https://orange.wateratlas.usf.edu/waterbodies/lakes/140202/lake-formosa" target="_blank" rel="noopener noreferrer">Lake Formosa</a>
+            <a href="https://orange.wateratlas.usf.edu/waterbodies/lakes/140405/lake-rowena" target="_blank" rel="noopener noreferrer">Lake Rowena</a>
+            <a href="https://orange.wateratlas.usf.edu/waterbodies/lakes/140185/lake-estelle" target="_blank" rel="noopener noreferrer">Lake Estelle</a>
+            <a href="https://orange.wateratlas.usf.edu/waterbodies/lakes/140449/lake-sue" target="_blank" rel="noopener noreferrer">Lake Sue</a>
+            <a href="https://orange.wateratlas.usf.edu/waterbodies/lakes/140497/lake-winyah" target="_blank" rel="noopener noreferrer">Lake Winyah</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Report a Problem -->
+    <section class="resource-section">
+      <div class="resource-inner fade-in">
+        <span class="section-label">Report a Problem</span>
+        <div class="resource-content">
+          <h2>Report Lake or Stormwater Pollution</h2>
+          <p>The City of Orlando's official channel for reporting pollution, illegal dumping, and stormwater issues directly to the relevant department.</p>
+          <a href="https://www.orlando.gov/Report-a-Problem/Report-a-Solid-Waste-and-Environment-Problem/Report-Lake-or-Stormwater-Pollution" class="resource-link" target="_blank" rel="noopener noreferrer">Report to the City of Orlando →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Get Involved -->
+    <section class="resource-section">
+      <div class="resource-inner fade-in">
+        <span class="section-label">Get Involved</span>
+        <div class="resource-content">
+          <h2>Keep Orlando Beautiful</h2>
+          <p>Volunteer for lake and waterway cleanups through the City of Orlando's official beautification program.</p>
+          <a href="https://www.orlando.gov/Our-Government/Departments-Offices/Public-Works/Streets-and-Stormwater-Division/Keep-Orlando-Beautiful/Become-a-Volunteer-for-Keep-Orlando-Beautiful" class="resource-link" target="_blank" rel="noopener noreferrer">Become a volunteer →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Loch Haven Lakes</span>
+    <span>Orlando, Florida</span>
+  </footer>
+
+  <script is:inline>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
