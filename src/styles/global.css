@@ -226,7 +226,7 @@ nav {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 1.1rem 1.4rem;
-  max-width: 340px;
+  overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -318,6 +318,8 @@ nav {
   padding-bottom: 0.35rem;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+  mask-image: linear-gradient(to right, black 70%, transparent 100%);
 }
 
 .lake-tags-scroll::-webkit-scrollbar {
