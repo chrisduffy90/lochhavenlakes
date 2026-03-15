@@ -97,23 +97,20 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         </div>
       </div>
       <div class="report-grid fade-in">
-        <a href="#" class="report-card">
+        <a href="/report/litter" class="report-card">
           <div class="report-icon">🪱</div>
           <h3>Fishing Litter</h3>
           <p>Monofilament line, hooks, bait containers, and tackle left at the water's edge.</p>
-          <span class="coming-soon-badge">Coming Soon</span>
         </a>
-        <a href="#" class="report-card">
+        <a href="/report/wildlife" class="report-card">
           <div class="report-icon">🦅</div>
           <h3>Wildlife Distress</h3>
           <p>Injured birds, entangled animals, or unusual wildlife behavior near the lakes.</p>
-          <span class="coming-soon-badge">Coming Soon</span>
         </a>
-        <a href="#" class="report-card">
+        <a href="/report/water-quality" class="report-card">
           <div class="report-icon">💧</div>
           <h3>Water Quality</h3>
           <p>Algae blooms, discoloration, unusual odor, or visible pollution in the water.</p>
-          <span class="coming-soon-badge">Coming Soon</span>
         </a>
       </div>
     </div>
@@ -126,10 +123,13 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         <h2>Stay in the loop</h2>
         <p>Get notified when the reporting platform launches and when lake health updates are published for your area.</p>
       </div>
-      <form class="signup-form fade-in" id="signup-form">
+      <form class="signup-form fade-in" id="signup-form" novalidate>
         <input type="text" placeholder="Your name" id="signup-name">
+        <span class="field-error" id="name-error"></span>
         <input type="email" placeholder="Email address" id="signup-email" required>
+        <span class="field-error" id="email-error"></span>
         <button type="submit">Notify Me When We Launch →</button>
+        <span class="field-error" id="form-error"></span>
       </form>
     </div>
   </section>
@@ -201,13 +201,43 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+    const nameInput  = document.getElementById('signup-name');
+    const emailInput = document.getElementById('signup-email');
+    const nameError  = document.getElementById('name-error');
+    const emailError = document.getElementById('email-error');
+    const formError  = document.getElementById('form-error');
+
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    }
+
+    nameInput.addEventListener('input', () => { nameError.textContent = ''; });
+    emailInput.addEventListener('input', () => { emailError.textContent = ''; });
+
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById('signup-name').value;
-      const email = document.getElementById('signup-email').value;
-      const btn = e.target.querySelector('button');
+      nameError.textContent  = '';
+      emailError.textContent = '';
+      formError.textContent  = '';
 
+      const name  = nameInput.value;
+      const email = emailInput.value;
+      let valid = true;
+
+      if (!name.trim()) {
+        nameError.textContent = 'Please enter your name';
+        valid = false;
+      }
+
+      if (!isValidEmail(email)) {
+        emailError.textContent = 'Please enter a valid email address';
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      const btn = e.target.querySelector('button');
       btn.textContent = 'Submitting...';
       btn.disabled = true;
 
@@ -221,12 +251,22 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         if (response.ok) {
           btn.textContent = "You're on the list ✓";
           btn.style.opacity = '0.6';
+        } else if (response.status === 422 || response.status === 400) {
+          formError.textContent = 'Please check your details and try again';
+          btn.textContent = 'Notify Me When We Launch →';
+          btn.disabled = false;
+        } else if (response.status >= 500) {
+          formError.textContent = 'Something went wrong on our end. Please try again later.';
+          btn.textContent = 'Notify Me When We Launch →';
+          btn.disabled = false;
         } else {
-          btn.textContent = 'Something went wrong. Try again.';
+          formError.textContent = 'Please check your details and try again';
+          btn.textContent = 'Notify Me When We Launch →';
           btn.disabled = false;
         }
       } catch (error) {
-        btn.textContent = 'Could not connect. Try again.';
+        formError.textContent = 'Could not connect. Please try again.';
+        btn.textContent = 'Notify Me When We Launch →';
         btn.disabled = false;
       }
     });

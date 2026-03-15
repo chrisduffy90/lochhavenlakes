@@ -1,0 +1,489 @@
+---
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Fishing Litter — Loch Haven Lakes</title>
+  <style>
+    .report-page {
+      padding-top: var(--nav-height);
+    }
+
+    .report-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .report-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .report-hero p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .report-form-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .form-field label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .form-field label .optional {
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      text-transform: none;
+      color: var(--text-secondary);
+      opacity: 0.65;
+      margin-left: 0.35rem;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.85rem 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5a5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.6;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-field input[type="file"] {
+      padding: 0.65rem 1.1rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .form-field .field-error {
+      font-size: 0.78rem;
+      color: #c0392b;
+      min-height: 1em;
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.25rem 0;
+    }
+
+    .form-submit {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .form-submit button {
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+      padding: 0.95rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+    }
+
+    .form-submit button:hover {
+      opacity: 0.8;
+    }
+
+    .form-submit button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #form-message {
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    #form-message.success {
+      color: #2d6a4f;
+    }
+
+    #form-message.error {
+      color: #c0392b;
+    }
+
+    @media (max-width: 680px) {
+      .report-hero {
+        padding: 3rem 1.25rem 2.5rem;
+      }
+
+      .report-hero h1 {
+        font-size: 1.9rem;
+      }
+
+      .report-form-section {
+        padding: 3rem 1.25rem 5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="site-name">Loch Haven Lakes</a>
+    <div class="nav-links">
+      <a href="/#mission" class="nav-text-link">About</a>
+      <a href="/#report" class="nav-text-link">Report</a>
+      <a href="/resources" class="nav-text-link">Resources</a>
+      <a href="/#signup" class="nav-cta">Stay Updated</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="/#mission">About</a>
+    <a href="/#report">Report</a>
+    <a href="/resources">Resources</a>
+  </div>
+
+  <div class="report-page">
+
+    <div class="report-hero">
+      <h1>Report Fishing Litter</h1>
+      <p>Help us track fishing line, hooks, and tackle left at the water's edge.</p>
+    </div>
+
+    <div class="report-form-section">
+      <form id="report-form" novalidate>
+
+        <div class="form-field">
+          <label for="lake">Which lake?</label>
+          <select id="lake" name="lake" required>
+            <option value="" disabled selected>Select a lake</option>
+            <option value="Lake Formosa">Lake Formosa</option>
+            <option value="Lake Rowena">Lake Rowena</option>
+            <option value="Lake Estelle">Lake Estelle</option>
+            <option value="Lake Sue">Lake Sue</option>
+            <option value="Lake Winyah">Lake Winyah</option>
+          </select>
+          <span class="field-error" id="lake-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="incident-date">When did you see this? <span class="optional">(optional)</span></label>
+          <input type="datetime-local" id="incident-date" name="incident_date">
+        </div>
+
+        <div class="form-field">
+          <label for="location">Where exactly?</label>
+          <input type="text" id="location" name="location_description" placeholder="e.g. Across from Blackton on Lake Formosa" required>
+          <span class="field-error" id="location-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="What did you see? How much litter? Was it accessible?" required></textarea>
+          <span class="field-error" id="description-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="action">Did you take any action? <span class="optional">(optional)</span></label>
+          <textarea id="action" name="action" placeholder="e.g. Removed the fishing line, not able to reach it"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="photo">Photo <span class="optional">(optional)</span></label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+        </div>
+
+        <hr class="form-divider">
+
+        <div class="form-field">
+          <label for="reporter-name">Your name <span class="optional">(optional)</span></label>
+          <input type="text" id="reporter-name" name="reporter_name" placeholder="First name or full name">
+        </div>
+
+        <div class="form-field">
+          <label for="reporter-email">Your email <span class="optional">(optional)</span></label>
+          <input type="email" id="reporter-email" name="reporter_email" placeholder="We'll only use this to follow up if needed">
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" id="submit-btn">Submit Report</button>
+          <div id="form-message"></div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Loch Haven Lakes</span>
+    <span>Orlando, Florida</span>
+  </footer>
+
+  <script>
+    const API_URL = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
+
+    // ── Hamburger ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    // ── EXIF GPS extraction ──
+    async function extractExifGPS(file) {
+      return new Promise(resolve => {
+        if (!file || !file.type.startsWith('image/jpeg')) return resolve(null);
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const buf = e.target.result;
+            const view = new DataView(buf);
+            if (view.getUint16(0) !== 0xFFD8) return resolve(null);
+            let offset = 2;
+            while (offset < buf.byteLength - 4) {
+              const marker = view.getUint16(offset);
+              const segLen = view.getUint16(offset + 2);
+              if (marker === 0xFFE1) {
+                const exifHeader = String.fromCharCode(
+                  view.getUint8(offset + 4), view.getUint8(offset + 5),
+                  view.getUint8(offset + 6), view.getUint8(offset + 7)
+                );
+                if (exifHeader !== 'Exif') { offset += 2 + segLen; continue; }
+                const tiff = offset + 10;
+                const le = view.getUint16(tiff) === 0x4949;
+                const ifd0 = tiff + view.getUint32(tiff + 4, le);
+                const count = view.getUint16(ifd0, le);
+                let gpsOff = null;
+                for (let i = 0; i < count; i++) {
+                  const entry = ifd0 + 2 + i * 12;
+                  if (view.getUint16(entry, le) === 0x8825) {
+                    gpsOff = tiff + view.getUint32(entry + 8, le);
+                  }
+                }
+                if (!gpsOff) return resolve(null);
+                const gpsCount = view.getUint16(gpsOff, le);
+                const gps = {};
+                for (let i = 0; i < gpsCount; i++) {
+                  const entry = gpsOff + 2 + i * 12;
+                  const tag = view.getUint16(entry, le);
+                  if (tag === 1 || tag === 3) {
+                    gps[tag] = String.fromCharCode(view.getUint8(entry + 8));
+                  } else if (tag === 2 || tag === 4) {
+                    const vOff = tiff + view.getUint32(entry + 8, le);
+                    const deg = view.getUint32(vOff, le) / view.getUint32(vOff + 4, le);
+                    const min = view.getUint32(vOff + 8, le) / view.getUint32(vOff + 12, le);
+                    const sec = view.getUint32(vOff + 16, le) / view.getUint32(vOff + 20, le);
+                    gps[tag] = deg + min / 60 + sec / 3600;
+                  }
+                }
+                if (gps[2] !== undefined && gps[4] !== undefined) {
+                  return resolve({
+                    lat: (gps[1] === 'S' ? -1 : 1) * gps[2],
+                    lng: (gps[3] === 'W' ? -1 : 1) * gps[4],
+                  });
+                }
+                return resolve(null);
+              }
+              if (marker === 0xFFDA) break;
+              offset += 2 + segLen;
+            }
+          } catch {}
+          resolve(null);
+        };
+        reader.readAsArrayBuffer(file.slice(0, 131072));
+      });
+    }
+
+    // ── Form submission ──
+    document.getElementById('report-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear errors
+      document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+      const msg = document.getElementById('form-message');
+      msg.textContent = '';
+      msg.className = '';
+
+      const lake        = document.getElementById('lake').value;
+      const location    = document.getElementById('location').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const action      = document.getElementById('action').value.trim();
+      const photoFile   = document.getElementById('photo').files[0];
+      const btn         = document.getElementById('submit-btn');
+
+      let valid = true;
+      if (!lake) {
+        document.getElementById('lake-error').textContent = 'Please select a lake';
+        valid = false;
+      }
+      if (!location) {
+        document.getElementById('location-error').textContent = 'Please describe the location';
+        valid = false;
+      }
+      if (!description) {
+        document.getElementById('description-error').textContent = 'Please add a description';
+        valid = false;
+      }
+      if (!valid) return;
+
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      try {
+        // Extract EXIF GPS if photo present
+        let gps = null;
+        if (photoFile) gps = await extractExifGPS(photoFile);
+
+        // Upload photo if present
+        let photoUrl = null;
+        if (photoFile) {
+          const formData = new FormData();
+          formData.append('file', photoFile);
+          const uploadRes = await fetch('${API_URL}/upload-photo', {
+            method: 'POST',
+            body: formData,
+          });
+          if (uploadRes.ok) {
+            const uploadData = await uploadRes.json();
+            photoUrl = uploadData.url || null;
+          }
+        }
+
+        // Build combined description (append action if provided)
+        const fullDescription = action
+          ? `${description}\n\nAction taken: ${action}`
+          : description;
+
+        const incidentDate = document.getElementById('incident-date').value;
+        const reporterName  = document.getElementById('reporter-name').value.trim() || null;
+        const reporterEmail = document.getElementById('reporter-email').value.trim() || null;
+
+        const payload = {
+          lake,
+          incident_date: incidentDate || null,
+          location_description: location,
+          location_lat: gps ? gps.lat : null,
+          location_lng: gps ? gps.lng : null,
+          description: fullDescription,
+          photo_url: photoUrl,
+          reporter_name: reporterName,
+          reporter_email: reporterEmail,
+        };
+
+        const response = await fetch('${API_URL}/report/litter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          document.getElementById('report-form').style.display = 'none';
+          msg.textContent = 'Thank you — your report has been received and will be reviewed before publishing.';
+          msg.className = 'success';
+        } else if (response.status === 422 || response.status === 400) {
+          msg.textContent = 'Please check your details and try again.';
+          msg.className = 'error';
+          btn.textContent = 'Submit Report';
+          btn.disabled = false;
+        } else {
+          msg.textContent = 'Something went wrong on our end. Please try again later.';
+          msg.className = 'error';
+          btn.textContent = 'Submit Report';
+          btn.disabled = false;
+        }
+      } catch {
+        msg.textContent = 'Could not connect. Please try again.';
+        msg.className = 'error';
+        btn.textContent = 'Submit Report';
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

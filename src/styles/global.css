@@ -541,6 +541,14 @@ nav {
   opacity: 0.85;
 }
 
+/* ── FORM ERRORS ────────────────────────────────────────────────────────── */
+.field-error {
+  font-size: 0.78rem;
+  color: #f87171;
+  letter-spacing: 0.01em;
+  min-height: 1em;
+}
+
 /* ── FOOTER ─────────────────────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--border);
