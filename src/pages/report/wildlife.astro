@@ -211,7 +211,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
     </div>
 
     <div class="report-form-section">
-      <form id="report-form" novalidate>
+      <form id="report-form" data-api-url={apiUrl} novalidate>
 
         <div class="form-field">
           <label for="lake">Which lake?</label>
@@ -292,7 +292,8 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
     <span>Orlando, Florida</span>
   </footer>
 
-  <script define:vars={{ apiUrl }}>
+  <script>
+    const apiUrl = document.getElementById('report-form').dataset.apiUrl;
 
     // ── Hamburger ──
     const hamburger = document.getElementById('hamburger');
