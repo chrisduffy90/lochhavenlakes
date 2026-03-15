@@ -290,6 +290,14 @@ import '../../styles/global.css';
   <script>
     const apiUrl = 'https://lochhavenlakes.onrender.com';
 
+    // ── Max date on incident date input ──
+    const dateInput = document.getElementById('incident-date');
+    if (dateInput) {
+      const now = new Date();
+      const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      dateInput.max = localISO;
+    }
+
     // ── Hamburger ──
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -319,6 +327,30 @@ import '../../styles/global.css';
           hamburger.setAttribute('aria-expanded', 'false');
           mobileMenu.setAttribute('aria-hidden', 'true');
         });
+      });
+    }
+
+    // ── Image compression ──
+    async function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const maxWidth = 1200;
+            const scale = Math.min(1, maxWidth / img.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+            }, 'image/jpeg', 0.8);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       });
     }
 
@@ -432,7 +464,8 @@ import '../../styles/global.css';
         let photoUrl = null;
         if (photoFile) {
           const formData = new FormData();
-          formData.append('file', photoFile);
+          const compressedFile = await compressImage(photoFile);
+          formData.append('file', compressedFile);
           const uploadRes = await fetch(`${apiUrl}/upload-photo`, {
             method: 'POST',
             body: formData,

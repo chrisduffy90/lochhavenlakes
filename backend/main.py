@@ -59,8 +59,6 @@ async def upload_photo(file: UploadFile = File(...)):
             },
             content=contents,
         )
-    print(f"Supabase storage response status: {response.status_code}")
-    print(f"Supabase storage response body: {response.text}")
     if response.status_code == 200:
         public_url = f"{SUPABASE_URL}/storage/v1/object/public/incident-photos/{filename}"
         return {"url": public_url}
