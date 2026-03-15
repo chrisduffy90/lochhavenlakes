@@ -6,6 +6,7 @@ from datetime import datetime
 class SignupBase(SQLModel):
     name: str
     email: str
+    is_test: bool = Field(default=False)
 
 # What actually gets stored in the database
 class Signup(SignupBase, table=True):

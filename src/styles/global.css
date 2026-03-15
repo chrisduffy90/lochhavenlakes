@@ -722,7 +722,7 @@ footer {
 
   .map-touch-prompt {
     position: absolute;
-    top: 38%;
+    top: 63%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
@@ -750,15 +750,19 @@ footer {
   .map-bottom-sheet {
     display: block;
     position: absolute;
-    bottom: 0;
+    top: var(--nav-height);
     left: 0;
     right: 0;
     background: rgba(244, 243, 240, 0.92);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 0.65rem 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0.65rem 1.25rem 1rem;
     z-index: 10;
+  }
+
+  .map-bottom-sheet .drag-handle {
+    display: none;
   }
 
   .map-bottom-sheet > p {
