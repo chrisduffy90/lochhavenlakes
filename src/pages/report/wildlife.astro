@@ -437,7 +437,7 @@ import '../../styles/global.css';
         if (photoFile) {
           const formData = new FormData();
           formData.append('file', photoFile);
-          const uploadRes = await fetch('${apiUrl}/upload-photo', {
+          const uploadRes = await fetch(`${apiUrl}/upload-photo`, {
             method: 'POST',
             body: formData,
           });
@@ -466,7 +466,7 @@ import '../../styles/global.css';
           condition,
         };
 
-        const response = await fetch('${apiUrl}/report/wildlife', {
+        const response = await fetch(`${apiUrl}/report/wildlife`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

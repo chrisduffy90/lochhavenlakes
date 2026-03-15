@@ -424,7 +424,7 @@ import '../../styles/global.css';
         if (photoFile) {
           const formData = new FormData();
           formData.append('file', photoFile);
-          const uploadRes = await fetch('${apiUrl}/upload-photo', {
+          const uploadRes = await fetch(`${apiUrl}/upload-photo`, {
             method: 'POST',
             body: formData,
           });
@@ -455,7 +455,7 @@ import '../../styles/global.css';
           reporter_email: reporterEmail,
         };
 
-        const response = await fetch('${apiUrl}/report/litter', {
+        const response = await fetch(`${apiUrl}/report/litter`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

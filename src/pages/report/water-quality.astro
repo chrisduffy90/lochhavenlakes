@@ -433,7 +433,7 @@ import '../../styles/global.css';
         if (photoFile) {
           const formData = new FormData();
           formData.append('file', photoFile);
-          const uploadRes = await fetch('${apiUrl}/upload-photo', {
+          const uploadRes = await fetch(`${apiUrl}/upload-photo`, {
             method: 'POST',
             body: formData,
           });
@@ -460,7 +460,7 @@ import '../../styles/global.css';
           observation_type: observationType,
         };
 
-        const response = await fetch('${apiUrl}/report/water-quality', {
+        const response = await fetch(`${apiUrl}/report/water-quality`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
