@@ -59,10 +59,12 @@ async def upload_photo(file: UploadFile = File(...)):
             },
             content=contents,
         )
-    if response.status_code in (200, 201):
+    print(f"Supabase storage response status: {response.status_code}")
+    print(f"Supabase storage response body: {response.text}")
+    if response.status_code == 200:
         public_url = f"{SUPABASE_URL}/storage/v1/object/public/incident-photos/{filename}"
         return {"url": public_url}
-    return {"error": "Upload failed"}
+    return {"error": "Upload failed", "status": response.status_code, "detail": response.text}
 
 # POST /report/litter
 @app.post("/report/litter")
