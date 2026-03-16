@@ -5,16 +5,17 @@ from datetime import datetime
 
 # What the user sends in (no id, no timestamp)
 class SignupBase(SQLModel):
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     is_test: bool = Field(default=False)
 
-    @field_validator('name')
+    @field_validator('first_name')
     @classmethod
-    def name_must_not_be_empty(cls, v: str) -> str:
+    def first_name_must_not_be_empty(cls, v: str) -> str:
         v = v.strip()
         if not v:
-            raise ValueError('Name cannot be empty')
+            raise ValueError('First name cannot be empty')
         return v
 
 # What actually gets stored in the database

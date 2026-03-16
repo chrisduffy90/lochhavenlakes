@@ -132,7 +132,8 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         <p>Get notified when the reporting platform launches and when lake health updates are published for your area.</p>
       </div>
       <form class="signup-form fade-in" id="signup-form" novalidate>
-        <input type="text" placeholder="Your name" id="signup-name">
+        <input type="text" placeholder="First name" id="signup-firstname">
+        <input type="text" placeholder="Last name" id="signup-lastname">
         <span class="field-error" id="name-error"></span>
         <input type="email" placeholder="Email address" id="signup-email" required>
         <span class="field-error" id="email-error"></span>
@@ -209,18 +210,20 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    const nameInput  = document.getElementById('signup-name');
-    const emailInput = document.getElementById('signup-email');
-    const nameError  = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const formError  = document.getElementById('form-error');
+    const firstNameInput = document.getElementById('signup-firstname');
+    const lastNameInput  = document.getElementById('signup-lastname');
+    const emailInput     = document.getElementById('signup-email');
+    const nameError      = document.getElementById('name-error');
+    const emailError     = document.getElementById('email-error');
+    const formError      = document.getElementById('form-error');
 
     function isValidEmail(val) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
     }
 
-    nameInput.addEventListener('input', () => { nameError.textContent = ''; });
-    emailInput.addEventListener('input', () => { emailError.textContent = ''; });
+    firstNameInput.addEventListener('input', () => { nameError.textContent = ''; });
+    lastNameInput.addEventListener('input',  () => { nameError.textContent = ''; });
+    emailInput.addEventListener('input',     () => { emailError.textContent = ''; });
 
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -229,12 +232,13 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
       emailError.textContent = '';
       formError.textContent  = '';
 
-      const name  = nameInput.value;
-      const email = emailInput.value;
+      const first_name = firstNameInput.value.trim();
+      const last_name  = lastNameInput.value.trim();
+      const email      = emailInput.value;
       let valid = true;
 
-      if (!name.trim()) {
-        nameError.textContent = 'Please enter your name';
+      if (!first_name) {
+        nameError.textContent = 'Please enter your first name';
         valid = false;
       }
 
@@ -253,7 +257,7 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         const response = await fetch('https://lochhavenlakes.onrender.com/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email })
+          body: JSON.stringify({ first_name, last_name, email })
         });
 
         if (response.ok) {
