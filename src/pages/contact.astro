@@ -1,0 +1,321 @@
+---
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Loch Haven Lakes</title>
+  <style>
+    .contact-page {
+      padding-top: var(--nav-height);
+    }
+
+    .contact-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-hero p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .contact-form-section {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .form-field label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .form-field label .optional {
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      text-transform: none;
+      color: var(--text-secondary);
+      opacity: 0.65;
+      margin-left: 0.35rem;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.85rem 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-field .field-error {
+      font-size: 0.78rem;
+      color: #c0392b;
+      min-height: 1em;
+    }
+
+    .form-submit {
+      margin-top: 2rem;
+    }
+
+    .form-submit button {
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+      padding: 0.95rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .form-submit button:hover {
+      opacity: 0.8;
+    }
+
+    .form-submit button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #form-message {
+      margin-top: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #2d6a4f;
+    }
+
+    @media (max-width: 680px) {
+      .contact-hero {
+        padding: 3rem 1.25rem 2.5rem;
+      }
+
+      .contact-hero h1 {
+        font-size: 1.9rem;
+      }
+
+      .contact-form-section {
+        padding: 3rem 1.25rem 5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="beta-banner">
+    Loch Haven Lakes is in beta — <a href="/contact">share feedback or report an issue</a>
+  </div>
+
+  <nav>
+    <a href="/" class="site-name">Loch Haven Lakes</a>
+    <div class="nav-links">
+      <a href="/#mission" class="nav-text-link">About</a>
+      <a href="/#report" class="nav-text-link">Report</a>
+      <a href="/reports" class="nav-text-link">View Reports</a>
+      <a href="/resources" class="nav-text-link">Resources</a>
+      <a href="/contact" class="nav-text-link">Contact</a>
+      <a href="/#signup" class="nav-cta">Stay Updated</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="/#mission">About</a>
+    <a href="/#report">Report</a>
+    <a href="/reports">View Reports</a>
+    <a href="/resources">Resources</a>
+    <a href="/contact">Contact</a>
+  </div>
+
+  <main class="contact-page">
+
+    <div class="contact-hero">
+      <h1>Contact Us</h1>
+      <p>Have a question, spotted an issue, or want to get involved? We'd love to hear from you.</p>
+    </div>
+
+    <div class="contact-form-section">
+      <form id="contact-form" action="https://formspree.io/f/mbdzanzb" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Loch Haven Lakes Contact Form">
+
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+          <span class="field-error" id="name-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          <span class="field-error" id="email-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="subject">Subject <span class="optional">(optional)</span></label>
+          <input type="text" id="subject" name="subject" placeholder="What's this about?">
+        </div>
+
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Your message…" required></textarea>
+          <span class="field-error" id="message-error"></span>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" id="submit-btn">Send Message</button>
+        </div>
+      </form>
+
+      <div id="form-message"></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Loch Haven Lakes</span>
+    <span><a href="/contact">Share feedback</a> · Orlando, Florida</span>
+  </footer>
+
+  <script is:inline>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    const form = document.getElementById('contact-form');
+    const msg  = document.getElementById('form-message');
+
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+      msg.textContent = '';
+
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      let valid = true;
+
+      if (!name) {
+        document.getElementById('name-error').textContent = 'Please enter your name';
+        valid = false;
+      }
+      if (!isValidEmail(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        valid = false;
+      }
+      if (!message) {
+        document.getElementById('message-error').textContent = 'Please enter a message';
+        valid = false;
+      }
+      if (!valid) return;
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          msg.textContent = "Thanks for reaching out — we'll get back to you soon.";
+        } else {
+          msg.textContent = 'Something went wrong. Please try again.';
+          msg.style.color = '#c0392b';
+          btn.textContent = 'Send Message';
+          btn.disabled = false;
+        }
+      } catch {
+        msg.textContent = 'Could not connect. Please try again.';
+        msg.style.color = '#c0392b';
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

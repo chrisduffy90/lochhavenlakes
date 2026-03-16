@@ -49,7 +49,8 @@
   --accent: #4a5568;
   --accent-light: #e2e6ea;
   --border: #dddbd7;
-  --nav-height: 64px;
+  --beta-height: 36px;
+  --nav-height: 100px; /* 64px nav + 36px beta banner */
 }
 
 * {
@@ -69,13 +70,37 @@ body {
   font-weight: 300;
 }
 
-/* ── NAV ────────────────────────────────────────────────────────────────── */
-nav {
+/* ── BETA BANNER ────────────────────────────────────────────────────────── */
+.beta-banner {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--nav-height);
+  height: var(--beta-height);
+  background: var(--text-primary);
+  color: #b0b0b0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  z-index: 102;
+  white-space: nowrap;
+}
+
+.beta-banner a {
+  color: #e8e8e8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── NAV ────────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: var(--beta-height);
+  left: 0;
+  right: 0;
+  height: 64px;
   background: rgba(244, 243, 240, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -558,6 +583,15 @@ footer {
   align-items: center;
   font-size: 0.8rem;
   color: var(--text-secondary);
+}
+
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--text-primary);
 }
 
 /* ── ANIMATIONS ─────────────────────────────────────────────────────────── */
