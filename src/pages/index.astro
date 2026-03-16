@@ -137,7 +137,7 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
         <span class="field-error" id="name-error"></span>
         <input type="email" placeholder="Email address" id="signup-email" required>
         <span class="field-error" id="email-error"></span>
-        <button type="submit">Notify Me When We Launch →</button>
+        <button type="submit">Stay Updated →</button>
         <span class="field-error" id="form-error"></span>
       </form>
     </div>
@@ -265,20 +265,20 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
           btn.style.opacity = '0.6';
         } else if (response.status === 422 || response.status === 400) {
           formError.textContent = 'Please check your details and try again';
-          btn.textContent = 'Notify Me When We Launch →';
+          btn.textContent = 'Stay Updated →';
           btn.disabled = false;
         } else if (response.status >= 500) {
           formError.textContent = 'Something went wrong on our end. Please try again later.';
-          btn.textContent = 'Notify Me When We Launch →';
+          btn.textContent = 'Stay Updated →';
           btn.disabled = false;
         } else {
           formError.textContent = 'Please check your details and try again';
-          btn.textContent = 'Notify Me When We Launch →';
+          btn.textContent = 'Stay Updated →';
           btn.disabled = false;
         }
       } catch (error) {
         formError.textContent = 'Could not connect. Please try again.';
-        btn.textContent = 'Notify Me When We Launch →';
+        btn.textContent = 'Stay Updated →';
         btn.disabled = false;
       }
     });
