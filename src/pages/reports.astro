@@ -12,7 +12,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
   <title>Incident Reports — Loch Haven Lakes</title>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js" is:inline></script>
-  <style>
+  <style is:global>
     .reports-page {
       padding-top: var(--nav-height);
     }
@@ -134,7 +134,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
     }
 
     /* ── Mapbox popup overrides ── */
-    :global(.mapboxgl-popup-content) {
+    .mapboxgl-popup-content {
       font-family: 'DM Sans', sans-serif;
       font-size: 0.82rem;
       line-height: 1.55;
@@ -144,7 +144,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       max-width: 240px;
     }
 
-    :global(.popup-type) {
+    .popup-type {
       font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -152,24 +152,24 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       margin-bottom: 0.25rem;
     }
 
-    :global(.popup-lake) {
+    .popup-lake {
       font-weight: 500;
       color: #1a1a1a;
       margin-bottom: 0.15rem;
     }
 
-    :global(.popup-date) {
+    .popup-date {
       color: #888;
       font-size: 0.78rem;
       margin-bottom: 0.5rem;
     }
 
-    :global(.popup-desc) {
+    .popup-desc {
       color: #3a3a3a;
       line-height: 1.5;
     }
 
-    :global(.popup-approx) {
+    .popup-approx {
       margin-top: 0.5rem;
       font-size: 0.72rem;
       color: #aaa;
@@ -208,12 +208,12 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       table-layout: fixed;
     }
 
-    :global(#incidents-table td:nth-child(1)),
-    :global(#incidents-table td:nth-child(2)) {
+    #incidents-table td:nth-child(1),
+    #incidents-table td:nth-child(2) {
       white-space: nowrap;
     }
 
-    :global(.desc-cell) {
+    .desc-cell {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -237,21 +237,21 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       padding-right: 0;
     }
 
-    :global(tbody tr) {
+    tbody tr {
       border-bottom: 1px solid var(--border);
     }
 
-    :global(tbody tr:last-child) {
+    tbody tr:last-child {
       border-bottom: none;
     }
 
-    :global(tbody td) {
+    tbody td {
       padding: 1rem 1rem;
       color: var(--text-primary);
       vertical-align: top;
     }
 
-    :global(.date-col) {
+    .date-col {
       white-space: nowrap;
       color: var(--text-secondary);
       font-size: 0.82rem;
@@ -259,20 +259,20 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       min-width: 90px;
     }
 
-    :global(.lake-col) {
+    .lake-col {
       white-space: nowrap;
       font-weight: 400;
       width: 130px;
       min-width: 130px;
     }
 
-    :global(.type-col) {
+    .type-col {
       width: 140px;
       min-width: 140px;
       white-space: nowrap;
     }
 
-    :global(.type-badge) {
+    .type-badge {
       display: inline-block;
       border-radius: 4px;
       padding: 0.2rem 0.6rem;
@@ -285,11 +285,11 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
       border: none;
     }
 
-    :global(.type-badge.litter)        { background: #c17a3a; }
-    :global(.type-badge.wildlife)      { background: #b85450; }
-    :global(.type-badge.water-quality) { background: #4a7fa5; }
+    .type-badge.litter        { background: #c17a3a; }
+    .type-badge.wildlife      { background: #b85450; }
+    .type-badge.water-quality { background: #4a7fa5; }
 
-    :global(.desc-col) {
+    .desc-col {
       color: var(--text-secondary);
       font-size: 0.85rem;
       line-height: 1.55;
@@ -297,39 +297,39 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
     }
 
     /* Summary table */
-    :global(.summary-count-col) {
+    .summary-count-col {
       white-space: nowrap;
     }
 
-    :global(.summary-date-col) {
+    .summary-date-col {
       white-space: nowrap;
       color: var(--text-secondary);
       font-size: 0.82rem;
     }
 
-    :global(.trend-up)   { color: #c0392b; font-size: 0.8rem; }
-    :global(.trend-down) { color: #27ae60; font-size: 0.8rem; }
-    :global(.trend-flat) { color: #aaa;    font-size: 0.8rem; }
+    .trend-up   { color: #c0392b; font-size: 0.8rem; }
+    .trend-down { color: #27ae60; font-size: 0.8rem; }
+    .trend-flat { color: #aaa;    font-size: 0.8rem; }
 
     /* Incident log: alternating rows, no dividers */
-    :global(#incidents-tbody tr) {
+    #incidents-tbody tr {
       border-bottom: none;
     }
 
-    :global(#incidents-tbody tr:nth-child(odd))  { background: var(--bg); }
-    :global(#incidents-tbody tr:nth-child(even)) { background: var(--surface); }
+    #incidents-tbody tr:nth-child(odd)  { background: var(--bg); }
+    #incidents-tbody tr:nth-child(even) { background: var(--surface); }
 
     /* Neutralise global coming-soon-badge margin inside tables */
-    :global(td .coming-soon-badge) {
+    td .coming-soon-badge {
       margin-top: 0;
     }
 
     .reports-table-section + .reports-table-section {
-      padding-top: 0;
+      padding-top: 2.5rem;
       border-top: 1px solid var(--border);
     }
 
-    :global(.table-empty) {
+    .table-empty {
       color: var(--text-secondary);
       font-size: 0.85rem;
       padding: 2rem 0;
