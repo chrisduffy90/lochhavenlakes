@@ -1,0 +1,7 @@
+name = "lochhavenlakes-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "lochhavenlakes-photos"

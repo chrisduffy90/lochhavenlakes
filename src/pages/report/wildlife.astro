@@ -1,5 +1,6 @@
 ---
 import '../../styles/global.css';
+const apiUrl = import.meta.env.PUBLIC_API_URL;
 ---
 
 <!DOCTYPE html>
@@ -299,8 +300,7 @@ import '../../styles/global.css';
     <span><a href="/contact">Share feedback</a> · Orlando, Florida</span>
   </footer>
 
-  <script>
-    const apiUrl = 'https://lochhavenlakes.onrender.com';
+  <script define:vars={{ apiUrl }}>
 
     // ── Max date on incident date input ──
     const dateInput = document.getElementById('incident-date');
